@@ -1,0 +1,51 @@
+attack_technique: T1124
+display_name: System Time Discovery
+atomic_tests:
+- name: System Time Discovery
+  auto_generated_guid: 20aba24b-e61f-4b26-b4ce-4784f763ca20
+  description: |
+    Identify the system time. Upon execution, the local computer system time and timezone will be displayed.
+  supported_platforms:
+  - windows
+  input_arguments:
+    computer_name:
+      description: computer name to query
+      type: String
+      default: localhost
+  executor:
+    command: |
+      net time \\#{computer_name}
+      w32tm /tz
+    name: command_prompt
+- name: System Time Discovery - PowerShell
+  auto_generated_guid: 1d5711d6-655c-4a47-ae9c-6503c74fa877
+  description: |
+    Identify the system time via PowerShell. Upon execution, the system time will be displayed.
+  supported_platforms:
+  - windows
+  executor:
+    command: |
+      Get-Date
+    name: powershell
+- name: System Time Discovery in macOS
+  auto_generated_guid: f449c933-0891-407f-821e-7916a21a1a6f
+  description: |
+    Identify system time. Upon execution, the local computer system time and timezone will be displayed. 
+  supported_platforms:
+    - macos
+  executor:
+    command: |
+      date
+    name: sh
+- name: System Time Discovery W32tm as a Delay
+  auto_generated_guid: d5d5a6b0-0f92-42d8-985d-47aafa2dd4db
+  description: |
+    identifies DCRat delay time tactics using w32tm.
+    https://research.splunk.com/endpoint/b2cc69e7-11ba-42dc-a269-59c069a48870/
+    https://blogs.blackberry.com/en/2022/05/dirty-deeds-done-dirt-cheap-russian-rat-offers-backdoor-bargains
+  supported_platforms:
+  - windows
+  executor:
+    command: |
+      W32tm /stripchart /computer:localhost /period:5 /dataonly /samples:2
+    name: command_prompt

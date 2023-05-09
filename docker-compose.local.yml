@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  app:
+    build: ./docker/django
+    volumes:
+      - ./code:/code
+      - ./log/app:/var/log
+    command: python -u manage.py runserver 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+
+  operation:
+    build: ./docker/python
+    container_name: operation
+    working_dir: /code
+    tty: true
+    volumes:
+      - ./operation:/code
+      - ./resources:/resources
+    environment:
+      PYTHONPATH: /code
+    env_file:
+      - .env
+      
+  mariadb:
+    image: mariadb:10.9.4
+    container_name: mariadb
+    tty: true
+    volumes:
+      - att-ck-db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+volumes:
+  att-ck-db:

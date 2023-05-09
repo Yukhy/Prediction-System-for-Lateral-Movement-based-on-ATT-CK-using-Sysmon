@@ -1,0 +1,153 @@
+{% extends 'app/base.html' %}
+{% block title %}
+Result - Similarity -
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="nav flex-column nav-pills col-2 ps-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    <button class="nav-link active" id="v-pills-similarity-tab" data-bs-toggle="pill"
+      data-bs-target="#v-pills-similarity" type="button" role="tab" aria-controls="v-pills-similarity"
+      aria-selected="true">
+      Similarity
+    </button>
+    {% for filename in filenames %}
+    <button class="nav-link" id="v-pills-{{ forloop.counter }}-tab" data-bs-toggle="pill"
+      data-bs-target="#v-pills-{{ forloop.counter }}" type="button" role="tab"
+      aria-controls="v-pills-{{ forloop.counter }}" aria-selected="false">
+      {{ filename }}
+    </button>
+    {% endfor %}
+  </div>
+
+  <div class="tab-content col-10" id="v-pills-tabContent">
+    <div class="tab-pane fade show active" id="v-pills-similarity" role="tabpanel"
+      aria-labelledby="v-pills-similarity-tab">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Similarity</h2>
+          <div>
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+              <i class="bi bi-info-circle me-3"></i>
+              <div>
+                The percentages calculated in this way are only for ease of visual comparison and interpretation and
+                should not be taken as absolute values.
+              </div>
+            </div>
+            {% for filename, similarity in similarities.items %}
+            <div class="mb-5">
+              <h4>{{ filename }}</h4>
+              <div class="progress" style="height:20px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                  aria-valuenow="{{similarity}}" aria-valuemin="0" aria-valuemax="100" style="width:{{ similarity }}%">
+                  {{ similarity }}%
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% for file in file_data %}
+    {% for filename, techniques in file.items %}
+    <div class="tab-pane fade" id="v-pills-{{ forloop.parentloop.counter }}" role="tabpanel"
+      aria-labelledby="v-pills-{{ forloop.parentloop.counter }}-tab">
+      <nav>
+        <div class="nav nav-tabs row border-0" role="tablist">
+          <div class="col">
+            <button class="nav-link w-100 active" id="nav-list-{{ forloop.parentloop.counter }}-tab"
+              data-bs-toggle="tab" data-bs-target="#nav-list-{{ forloop.parentloop.counter }}" type="button" role="tab"
+              aria-controls="nav-list-{{ forloop.parentloop.counter }}" aria-selected="true">
+              List
+            </button>
+          </div>
+          <div class="col">
+            <button class="nav-link w-100" id="nav-matrix-{{ forloop.parentloop.counter }}-tab" data-bs-toggle="tab"
+              data-bs-target="#nav-matrix-{{ forloop.parentloop.counter }}" type="button" role="tab"
+              aria-controls="nav-matrix-{{ forloop.parentloop.counter }}" aria-selected="false">
+              Matrix
+            </button>
+          </div>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tab2">
+        <div class="tab-pane fade show active" id="nav-list-{{ forloop.parentloop.counter }}" role="tabpanel"
+          aria-labelledby="nav-list-{{ forloop.parentloop.counter }}-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="card-title">{{filename}}</h2>
+              <div class="accordion">
+                {% for technique in techniques %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="heading{{ technique.id }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapse{{ technique.id }}" aria-expanded="true"
+                      aria-controls="collapse{{ technique.id }}">
+                      <h5 class="mb-0"><span
+                          class="badge bg-secondary me-3">{{ technique.external_id }}</span>{{ technique.name }}
+                      </h5>
+                    </button>
+                  </h2>
+                  <div id="collapse{{ technique.id }}" class="accordion-collapse collapse"
+                    aria-labelledby="heading{{ technique.id }}" data-bs-parent="#accordion{{ technique.id }}">
+                    <div class="accordion-body">
+                      <div>
+                        <h5>Description from MITRE</h5>
+                        <p>{{ technique.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-matrix-{{ forloop.parentloop.counter }}" role="tabpanel"
+          aria-labelledby="nav-matrix-{{ forloop.parentloop.counter }}-tab">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3 class="card-title">{{filename}}</h3>
+              <div class="card">
+                {% include "app/matrix.html" %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // 類似度ProgressBarの色変更
+  document.querySelectorAll('[aria-valuenow]').forEach(function (element) {
+    var valueNow = parseFloat(element.getAttribute('aria-valuenow'));
+    if (0 < valueNow && valueNow <= 33) {
+      element.classList.add('bg-success');
+    } else if (33 < valueNow && valueNow <= 66) {
+      element.classList.add('bg-warning');
+      element.classList.add('text-dark');
+    } else {
+      element.classList.add('bg-danger');
+    }
+  });
+</script>
+
+<!-- Matrixの作成 -->
+{% for t_external_id_str in t_external_ids_str %}
+<script>
+  document.querySelector("#v-pills-{{ forloop.counter }}").querySelectorAll("{{t_external_id_str}}").forEach(
+    element => {
+      element.style.backgroundColor = "#dc3545";
+    })
+</script>
+{% endfor %}
+
+
+
+{% endblock content %}

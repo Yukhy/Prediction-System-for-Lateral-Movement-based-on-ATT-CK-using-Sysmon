@@ -1,0 +1,155 @@
+{% extends "app/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- tab -->
+<div class="mx-auto p-2 col-7 col-md-5 col-xl-4 mb-3">
+    <ul class="nav nav-pills nav-fill border border-1 rounded-pill" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active rounded-pill" id="pills-single-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-single" type="button" role="tab" aria-controls="pills-single"
+                aria-selected="true">
+                Single
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-pill" id="pills-multi-tab" data-bs-toggle="pill"
+                data-bs-target="#pills-multi" type="button" role="tab" aria-controls="pills-multi"
+                aria-selected="false">
+                Multi
+            </button>
+        </li>
+    </ul>
+</div>
+<div class="card col-10 col-md-8 col-xl-7 mx-auto">
+    <!-- form -->
+    <div class="tab-content" id="pills-tabContent">
+        <!-- single -->
+        <div class="tab-pane fade show active p-4" id="pills-single" role="tabpanel" aria-labelledby="pills-single-tab">
+            <div class="alert alert-light py-0" role="alert">
+                <i class="bi bi-info-circle"></i>
+                Upload the Sysmon log file to be converted to ATT&CK Techniques.
+            </div>
+            <form action="{% url 'result_technique' %}" method="POST" enctype="multipart/form-data" class="m-0">
+                {% csrf_token %}
+                <input type="file" class="form-control" id="file-upload" aria-label="Upload" name="file">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-outline-secondary mt-2 ms-auto" type="submit">
+                        <i class="bi bi-upload"></i>
+                        Upload
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- multi -->
+        <div class="tab-pane fade p-4" id="pills-multi" role="tabpanel" aria-labelledby="pills-multi-tab">
+            <form id="uploadForm" action="{% url 'result_similarity' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="page1" class="page">
+                    <div class="alert alert-light py-0" role="alert">
+                        <i class="bi bi-info-circle"></i>
+                        Upload the Sysmon log file for the initially infected device.
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="file" class="form-control" name="file0" id="inputGroupFile0"
+                            aria-describedby="inputGroupFileAddon0" aria-label="Upload">
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-secondary" onclick="showPage2()">
+                            <i class="bi bi-arrow-right"></i>
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+                <div id="page2" class="page" style="display:none;">
+                    <div class="alert alert-light py-0" role="alert">
+                        <i class="bi bi-info-circle"></i>
+                        Upload the Sysmon log of the device for which you want to check the possibility of Lateral
+                        Movement.
+                    </div>
+                    <div id="inputFieldsContainer"></div>
+                    <p id="limitMessage" class="text-center" style="display: none; color: red;">You can't add more than
+                        10 file fields.</p>
+                    <div class="d-flex">
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary" onclick="showPage1()">
+                                <i class="bi bi-arrow-left"></i>
+                                Back
+                            </button>
+                        </div>
+                        <div class="ms-auto">
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-upload"></i>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .nav-item {
+        font-size: 0.8rem;
+    }
+</style>
+<script>
+    let inputFieldCounter = 1;
+    const maxInputFields = 11;
+
+    function addInputField() {
+        if (inputFieldCounter >= maxInputFields) {
+            document.getElementById('limitMessage').style.display = 'block';
+            return;
+        }
+
+        const container = document.getElementById('inputFieldsContainer');
+        const inputGroup = document.createElement('div');
+        inputGroup.classList.add('input-group', 'mb-2');
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.classList.add('form-control');
+        input.name = 'file' + inputFieldCounter;
+        input.id = 'inputGroupFile' + inputFieldCounter;
+        input.setAttribute('aria-describedby', 'inputGroupFileAddon' + inputFieldCounter);
+        input.setAttribute('aria-label', 'Upload');
+
+        const addButton = document.createElement('button');
+        addButton.classList.add('btn', 'btn-outline-secondary');
+        addButton.type = 'button';
+        addButton.id = 'inputGroupFileAddon' + inputFieldCounter;
+        addButton.textContent = 'Add';
+        addButton.onclick = addInputField;
+
+        inputFieldCounter++;
+
+        inputGroup.appendChild(input);
+        inputGroup.appendChild(addButton);
+        container.appendChild(inputGroup);
+    }
+
+    function showPage1() {
+        document.getElementById('page1').style.display = 'block';
+        document.getElementById('page2').style.display = 'none';
+    }
+
+    function showPage2() {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'block';
+    }
+
+
+    window.onload = function () {
+        for (let i = 0; i < 2; i++) {
+            addInputField();
+        }
+    }
+</script>
+
+{% endblock content %}

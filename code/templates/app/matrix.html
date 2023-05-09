@@ -1,0 +1,106 @@
+<div class="table-responsive">
+    <table class="table table-sm">
+        <thead>
+            <tr class="text-center align-middle">
+                <th scope="col" id="TA0043">Reconnaissance</th>
+                <th scope="col" id="TA0042">Resource Development</th>
+                <th scope="col" id="TA0001">Initial Access</th>
+                <th scope="col" id="TA0002">Execution</th>
+                <th scope="col" id="TA0003">Persistence</th>
+                <th scope="col" id="TA0004">Privilege Escalation</th>
+                <th scope="col" id="TA0005">Defense Evasion</th>
+                <th scope="col" id="TA0006">Credential Access</th>
+                <th scope="col" id="TA0007">Discovery</th>
+                <th scope="col" id="TA0008">Lateral Movement</th>
+                <th scope="col" id="TA0009">Collection</th>
+                <th scope="col" id="TA0011">Command and Control</th>
+                <th scope="col" id="TA0010">Exfiltration</th>
+                <th scope="col" id="TA0040">Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% for cell in TA0043 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0042 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0001 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0002 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0003 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0004 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0005 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0006 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0007 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0008 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0009 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0011 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0010 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for cell in TA0040 %}
+                    <table class="table table-sm table-bordered border-secondary mb-0 {{cell.technique__external_id}}"><tbody><tr><td><div>{{cell.technique__name}}</div></td></tr></tbody></table>
+                    {% endfor %}
+                </td>
+            </tr>
+    </table>
+</div>
+
+<style>
+    /* セルの横幅を可変 */
+    th {
+        min-width: 110px;
+    }
+
+    td > div{
+        font-size: 0.8em;
+    }
+</style>
