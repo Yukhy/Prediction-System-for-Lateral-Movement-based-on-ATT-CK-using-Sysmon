@@ -41,3 +41,6 @@ Access ```localhost:8000```
 
 ## Usage
 For detailed usage instructions, please see [here](https://github.com/Yukhy/Prediction-System-for-Lateral-Movement-based-on-ATT-CK-using-Sysmon/blob/main/docs/usage.md).
+
+## Disclamer
+This project is for research purposes, and does not provide any guarantees regarding the completeness and accuracy of the source code and its contents. We are not responsible for any direct or indirect loss caused by using the information or tools contained on this page.
