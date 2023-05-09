@@ -4,7 +4,7 @@
 This is a powerful tool that helps organizations quickly detect and understand malicious activity within their networks. By converting Windows logs collected by Sysmon into MITRE ATT&CK techniques, security teams can quickly visualize and identify attack patterns and progress. 
 
 ## Description
-For a detailed description, please see [here](https://github.com/Yukhy/bha-dev/blob/develop/docs/description_slide.pdf).
+For a detailed description, please see [here](https://github.com/Yukhy/Prediction-System-for-Lateral-Movement-based-on-ATT-CK-using-Sysmon/blob/develop/docs/description_slide.pdf).
 
 ## Features
 - Convert Sysmon logs to MITRE ATT&CK techniques
@@ -40,4 +40,4 @@ $ docker compose -f docker-compose.local.yml up -d
 Access ```localhost:8000```
 
 ## Usage
-For detailed usage instructions, please see [here](https://github.com/Yukhy/bha-dev/blob/develop/docs/usage.md).
+For detailed usage instructions, please see [here](https://github.com/Yukhy/Prediction-System-for-Lateral-Movement-based-on-ATT-CK-using-Sysmon/blob/develop/docs/usage.md).
